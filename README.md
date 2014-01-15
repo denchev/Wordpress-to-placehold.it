@@ -12,8 +12,11 @@ This is a drop-in file. There is no need for installation!
 4. Click submit
 5. Wait till the process is over (Some stats will appear)
 6. Use the download link to download your new file.
+7. 
 
 That is it. The newly downloaded file is ready to be imported in new location. 
+
+NOTE: This file will create a new folder in your uploads directory. Folder name is placehold.it. It is necessary for the import process to download images to new host.
 
 PLEASE TEST THE NEWLY IMPORTED CONTENT WELL
 
