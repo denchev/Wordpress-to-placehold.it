@@ -41,7 +41,8 @@ if( isset( $_POST['submit'] ) ) {
 
 	$file = $file['name'];
 	$file_parts = explode('.', $file);
-	$file_name = $file_parts[0];
+	$file_ext = array_pop($file_parts);
+	$file_name = implode('.', $file_parts);
 
 	// Extract all image files
 	$matches = array();
@@ -73,7 +74,7 @@ if( isset( $_POST['submit'] ) ) {
 		$width = $image_info[0];
 		$height = $image_info[1];
 
-		$placeholdit_new_file = $dir . '/' . $width . 'x' . $height . '.gif';
+		$placeholdit_new_file = $dir . '/placehold.it-' . $width . 'x' . $height . '.gif';
 
 		if( ! file_exists( $placeholdit_new_file ) ) {
 			$placeholdit = 'http://placehold.it/' . $width . 'x' . $height;
