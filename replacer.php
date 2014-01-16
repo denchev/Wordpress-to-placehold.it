@@ -17,6 +17,7 @@ if( isset( $_GET['download'] ) ) {
 	header("Content-Transfer-Encoding: Binary"); 
 	header("Content-disposition: attachment; filename=\"" . basename($file) . "\""); 
 	readfile($file);
+	die;
 }
 
 if( isset( $_POST['submit'] ) ) {
