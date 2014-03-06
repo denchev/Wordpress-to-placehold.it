@@ -93,7 +93,11 @@ if( isset( $_POST['submit'] ) ) {
 		ob_flush();
 	}
 
-	if( file_put_contents( $file_name . '-replaced.xml', $content) ) {
+	$handle = fopen($file_name . '-replaced.xml', 'a+');
+	$write = fwrite($handle, $content);
+	fclose($handle);
+
+	if( $write ) {
 
 		echo '<a href="replacer.php?download=' . $file_name . '-replaced.xml' . '">Download new file!</a>';
 	} else {
