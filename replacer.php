@@ -55,7 +55,9 @@ if( isset( $_POST['submit'] ) ) {
 	// Prepare a folder where to download Placehold.it images later to be imported.
 	$dir = 'wp-content/uploads/placehold.it';
 	if( ! file_exists($dir) ) {
-		mkdir($dir);	
+		if(!is_writable($dir) || false === mkdir($dir)) {
+			die('Unable to create folder: <strong>' . $dir . '</strong>. Check file permissions.');
+		}
 	} 
 
 	$counter = 0;
@@ -94,7 +96,7 @@ if( isset( $_POST['submit'] ) ) {
 	}
 
 	$handle = fopen($file_name . '-replaced.xml', 'a+');
-	$write = fwrite($handle, $content);
+	$write = fwrite($handle, $content, strlen($content));
 	fclose($handle);
 
 	if( $write ) {
