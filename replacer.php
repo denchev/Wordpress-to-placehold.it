@@ -57,7 +57,9 @@ if( isset( $_POST['submit'] ) ) {
 
 	$counter = 0;
 
-	echo '<table width="100%" cellspacing="0" cellpadding="0">';
+	echo '<table width="100%" cellspacing="2" cellpadding="2">';
+
+	$urls_count = count($urls);
 
 	foreach ($urls as $url) {
 
@@ -67,7 +69,7 @@ if( isset( $_POST['submit'] ) ) {
 
 		// It is not a valid image
 		if($image_info === false) {
-			echo '<tr><td colspan="3"><span style="color: red">Image <strong>' . $url . '</strong> skipped. Probably not found.</span></td></tr>';
+			echo '<tr><td>' . $counter . ' / ' . $urls_count . '</td><td colspan="2"><span style="color: red">Image <strong>' . $url . '</strong> skipped. Probably not found.</span></td></tr>';
 			continue;
 		}
 
@@ -84,7 +86,7 @@ if( isset( $_POST['submit'] ) ) {
 		}
 		
 		// Show some stats
-		echo '<tr><td>' . $counter . ' / ' . count($urls) . '</td><td>' . $url . '</td><td>' . ($link . '/' . $placeholdit_new_file) . '</td></tr>';
+		echo '<tr><td>' . $counter . ' / ' . $urls_count . '</td><td>' . $url . '</td><td>' . ($link . '/' . $placeholdit_new_file) . '</td></tr>';
 
 		$content = str_replace($url, $link . '/' . $placeholdit_new_file, $content);
 
