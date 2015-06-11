@@ -13,7 +13,7 @@ if( isset( $_GET['download'] ) ) {
 		die('You shall not pass!');
 	}
 
-	header('Content-Type: application/octet-stream');
+	header('Content-Type: text/xml');
 	header("Content-Transfer-Encoding: Binary"); 
 	header("Content-disposition: attachment; filename=\"" . basename($file) . "\""); 
 	readfile($file);
@@ -26,11 +26,6 @@ if( isset( $_POST['submit'] ) ) {
 	set_time_limit(0);
 
 	$file = $_FILES['xml'];
-
-	// A bit of security check
-	if($file['type'] != 'text/xml') {
-		die('You shall not pass!');
-	}
 
 	$content = file_get_contents( $file['tmp_name'] );
 
@@ -62,6 +57,8 @@ if( isset( $_POST['submit'] ) ) {
 
 	$counter = 0;
 
+	echo '<table width="100%" cellspacing="0" cellpadding="0">';
+
 	foreach ($urls as $url) {
 
 		$counter++;
@@ -70,7 +67,7 @@ if( isset( $_POST['submit'] ) ) {
 
 		// It is not a valid image
 		if($image_info === false) {
-			echo '<span style="color: red">Image <strong>' . $url . '</strong> skipped. Probably not found.</span><br>';
+			echo '<tr><td colspan="3"><span style="color: red">Image <strong>' . $url . '</strong> skipped. Probably not found.</span></td></tr>';
 			continue;
 		}
 
@@ -81,13 +78,13 @@ if( isset( $_POST['submit'] ) ) {
 
 		if( ! file_exists( $placeholdit_new_file ) ) {
 			$placeholdit = 'http://placehold.it/' . $width . 'x' . $height;
-			$content = file_get_contents($placeholdit);
+			$image_content = file_get_contents($placeholdit);
 
-			file_put_contents($placeholdit_new_file, $content);
+			file_put_contents($placeholdit_new_file, $image_content);
 		}
 		
 		// Show some stats
-		echo 'Processed: ' . $url . ' => ' . ($link . '/' . $placeholdit_new_file) . ' => ' . $counter . ' / ' . count($urls) . '<br>';
+		echo '<tr><td>' . $counter . ' / ' . count($urls) . '</td><td>' . $url . '</td><td>' . ($link . '/' . $placeholdit_new_file) . '</td></tr>';
 
 		$content = str_replace($url, $link . '/' . $placeholdit_new_file, $content);
 
@@ -95,7 +92,9 @@ if( isset( $_POST['submit'] ) ) {
 		ob_flush();
 	}
 
-	$handle = fopen($file_name . '-replaced.xml', 'a+');
+	echo '</table>';
+
+	$handle = fopen($file_name . '-replaced.xml', 'w+');
 	$write = fwrite($handle, $content, strlen($content));
 	fclose($handle);
 
