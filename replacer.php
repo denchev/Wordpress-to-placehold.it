@@ -42,7 +42,7 @@ if( isset( $_POST['submit'] ) ) {
 
 	// Extract all image files
 	$matches = array();
-	preg_match_all('/http(s)*:\/\/(.*?)\.(jpg|png|gif)/', $content, $matches);
+	preg_match_all('/http(s)*:\/\/(.*?)\.(jpg|jpeg|png|gif)/', $content, $matches);
 
 	$urls = $matches[0];
 	$urls = array_unique($urls);
